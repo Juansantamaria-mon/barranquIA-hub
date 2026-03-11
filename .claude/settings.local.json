@@ -1,0 +1,29 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ls -la /home/desarrollo/barranquIA-hub/hub/frontend/ && python3 --version && node --version && npm --version 2>/dev/null)",
+      "Bash(which python3 && pip3 --version && which node)",
+      "Bash(chmod +x /home/desarrollo/barranquIA-hub/hub/setup.sh && ls -la /home/desarrollo/barranquIA-hub/hub/)",
+      "Bash(cd /home/desarrollo/barranquIA-hub/hub && python3 -m venv venv && echo \"venv created\")",
+      "Bash(source venv/bin/activate && pip install -r backend/requirements.txt 2>&1 | tail -5)",
+      "Bash(source venv/bin/activate && cd backend && python manage.py migrate && python manage.py collectstatic --noinput 2>&1)",
+      "Bash(cd /home/desarrollo/barranquIA-hub/hub/frontend && npm install 2>&1 | tail -5)",
+      "Bash(npm run build 2>&1)",
+      "Bash(sudo cp /home/desarrollo/barranquIA-hub/hub/nginx.conf /etc/nginx/sites-available/barranquia-hub && sudo ln -sf /etc/nginx/sites-available/barranquia-hub /etc/nginx/sites-enabled/barranquia-hub && sudo nginx -t 2>&1)",
+      "Bash(docker ps --format \"table {{.Names}}\\\\t{{.Status}}\\\\t{{.Ports}}\" 2>/dev/null || echo \"Docker no disponible o sin contenedores\")",
+      "Bash(systemctl status barranquia-hub 2>/dev/null | head -20 || echo \"servicio no encontrado via systemctl\")",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://127.0.0.1:8005/ 2>/dev/null && echo \"\" || echo \"No responde en 8005\")",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://192.168.0.101:9005/ 2>/dev/null && echo \"\" && ps aux | grep -E \"9005|barranquia\" | grep -v grep)",
+      "Bash(systemctl status barranquia-hub 2>&1 | head -20)",
+      "Bash(ss -tlnp | grep 9005; ps aux | grep -i \"9005\\\\|barranquia\\\\|ngrok\" | grep -v grep)",
+      "Bash(ip addr show | grep \"192.168\" && hostname -I)",
+      "Bash(ss -tlnp | grep 9005 && echo \"CORRIENDO\" || echo \"NO corre en 9005\")",
+      "Bash(cd /home/desarrollo/barranquIA-hub/hub/frontend && npm run build 2>&1)",
+      "Bash(cd /home/desarrollo/barranquIA-hub/hub/backend && ../venv/bin/python manage.py collectstatic --noinput 2>&1)",
+      "Bash(sudo cp /home/desarrollo/barranquIA-hub/hub/barranquia-hub.service /etc/systemd/system/barranquia-hub.service && sudo systemctl daemon-reload && echo \"OK\")",
+      "Bash(../venv/bin/python manage.py migrate --noinput 2>&1)",
+      "Bash(sudo systemctl restart barranquia-hub && sudo systemctl status barranquia-hub --no-pager | head -15)",
+      "Bash(git init && git add . && git commit -m \"$\\(cat <<'EOF'\nInitial commit: barranquIA-hub project\n\nCo-Authored-By: Claude Sonnet 4.6 <noreply@anthropic.com>\nEOF\n\\)\")"
+    ]
+  }
+}
